@@ -1,10 +1,21 @@
 # xtclib
 
+[![PyPI version](https://img.shields.io/pypi/v/xtclib)](https://pypi.org/project/xtclib/)
+[![PyPI downloads](https://img.shields.io/pypi/dm/xtclib)](https://pypi.org/project/xtclib/)
+[![Python versions](https://img.shields.io/pypi/pyversions/xtclib)](https://pypi.org/project/xtclib/)
+[![License: LGPL v2.1+](https://img.shields.io/badge/License-LGPL_v2.1+-blue.svg)](https://www.gnu.org/licenses/old-licenses/lgpl-2.1.html)
+
 A fast, standalone Python library for reading and writing
 [GROMACS XTC](https://manual.gromacs.org/current/reference-manual/file-formats.html#xtc)
 trajectory files.  The coordinate compression and decompression are
 implemented in C and wrapped with Cython, giving performance close to
 the native GROMACS routines while requiring **only NumPy** at runtime.
+
+## Why make this?
+
+This package was written so we have a simple, stand-alone and low-dependency reference implementation of the XTC library for reading/writing XTC files. In many cases, we work with XTC files and do not need the dependency overhead of large packages which themselves often come with large dependency overheads, so having a reference and lightweight implementation felt like a good idea for improved modularity across our ecosystem. The use case here is specifically where reading/writing XTC files is necessary, but we want to avoid installing mdtraj, mdanalysis, gromacs etc. YMMC in terms of how often this is an issue, of course.
+
+This also removes the need for any kind of topology file to read/write an XTC file - we may in the future OPTIONALLY add this in as a .pdb file to provide a simple objective oriented interface but having separate and independent XTC read/write power is a core basal interface we want access to directly.
 
 ## Features
 
@@ -21,10 +32,24 @@ the native GROMACS routines while requiring **only NumPy** at runtime.
 
 ## Installation
 
+### From PyPI (stable release)
+
 ```bash
+pip install xtclib
+```
+
+### From GitHub (latest development version)
+
+```bash
+pip install git+https://github.com/holehouse-lab/xtclib.git
+```
+
+### From source (for local development)
+
+```bash
+git clone https://github.com/holehouse-lab/xtclib.git
+cd xtclib
 pip install -e .
-# or with uv:
-uv pip install -e .
 ```
 
 Build requirements (`setuptools`, `Cython`, `numpy`) are declared in
@@ -173,6 +198,18 @@ Files written by `xtclib` are fully compatible with:
 
 This has been validated by round-trip testing: files written by `xtclib`
 produce byte-identical coordinate arrays when read back by MDTraj.
+
+## System size limits
+
+`xtclib` uses the classic XTC format (magic number 1995) with 32-bit
+frame sizes, which imposes the following limits:
+
+| Quantity | Limit |
+|---|---|
+| Atoms per frame | ~300 million (limited by 32-bit integer range) |
+| Frames per file | Unlimited (sequential frames, no index) |
+| Coordinate range | ±2,147,483 nm at precision 1000 |
+| Compressed frame size | ~2 GB per frame |
 
 ## Project structure
 

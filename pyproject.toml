@@ -45,9 +45,8 @@ test = [
 ]
 
 [project.urls]
-# Update once hosting is set up
+"Source" = "https://github.com/holehouse-lab/xtclib"
 # "Documentation" = "https://xtclib.readthedocs.io/"
-# "Source" = "https://github.com/<username>/xtclib/"
 
 [tool.setuptools]
 zip-safe = false

@@ -30,5 +30,8 @@ env/
 .DS_Store
 Thumbs.db
 
+# uv
+uv.lock
+
 # pytest
 .pytest_cache/
