@@ -17,7 +17,6 @@ extensions = [
 
 setup(
     name="xtclib",
-    version="0.1.0",
     packages=["xtclib"],
     ext_modules=cythonize(extensions, compiler_directives={
         "boundscheck": False,

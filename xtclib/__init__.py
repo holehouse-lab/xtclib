@@ -30,3 +30,8 @@ Write a trajectory:
 
 from .reader import XTCReader, read_xtc
 from .writer import write_xtc
+
+try:
+    from ._version import __version__
+except ImportError:
+    __version__ = "0.0.0+unknown"

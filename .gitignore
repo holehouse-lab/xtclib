@@ -10,6 +10,9 @@ __pycache__/
 # Cython generated
 xtclib/_xtc_core.c
 
+# Versioningit generated
+xtclib/_version.py
+
 # Build directories
 build/
 dist/

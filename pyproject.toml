@@ -1,11 +1,11 @@
 [build-system]
-requires = ["setuptools>=64", "wheel", "Cython>=3.0", "numpy>=1.20"]
+requires = ["setuptools>=64", "wheel", "versioningit~=3.0", "Cython>=3.0", "numpy>=1.20"]
 build-backend = "setuptools.build_meta"
 
 # https://packaging.python.org/en/latest/specifications/declaring-project-metadata/
 [project]
 name = "xtclib"
-version = "0.1.0"
+dynamic = ["version"]
 description = "Fast, standalone reader/writer for GROMACS XTC trajectory files"
 readme = "README.md"
 authors = [
@@ -66,3 +66,19 @@ xtclib = [
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+
+[tool.versioningit]
+default-version = "0.1.0+unknown"
+
+[tool.versioningit.format]
+distance = "{base_version}+{distance}.{vcs}{rev}"
+dirty = "{base_version}+{distance}.{vcs}{rev}.dirty"
+distance-dirty = "{base_version}+{distance}.{vcs}{rev}.dirty"
+
+[tool.versioningit.vcs]
+method = "git"
+match = ["*"]
+default-tag = "0.1.0"
+
+[tool.versioningit.write]
+file = "xtclib/_version.py"
